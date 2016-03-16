@@ -4,6 +4,8 @@
         <title>Twit Macet - @yield('title')</title>
         <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url('assets/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ url('assets/css/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
     </head>
     <body>
         <!-- Fixed navbar -->
@@ -20,9 +22,9 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="{{ url('/') }}">Maps</a></li>
-                        <li><a href="{{ url('/tweets') }}">Tweets</a></li>
-                        <li><a href="{{ url('/about') }}">About</a></li>
+                        <li class="{{ (Request::is('/') ? 'active' : '') }}"><a href="{{ url('/') }}">Maps</a></li>
+                        <li class="{{ (Request::is('tweets') ? 'active' : '') }}"><a href="{{ url('/tweets') }}">Tweets</a></li>
+                        <li class="{{ (Request::is('about') ? 'active' : '') }}"><a href="{{ url('/about') }}">About</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
 
@@ -30,10 +32,12 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-        <div class="container">
+        <div class="margin-navbar">
             @yield('content')
         </div>
         <script src="{{ url('assets/js/jquery-2.2.1.min.js') }}"></script>
         <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+        @stack('scripts')
     </body>
 </html>

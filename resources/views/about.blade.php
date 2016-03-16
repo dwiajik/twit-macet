@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title', 'Maps')
+@section('title', 'About')
 
 @section('content')
-    <p>Maps</p>
+    <p>About</p>
 @endsection

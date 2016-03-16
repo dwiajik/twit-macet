@@ -23,7 +23,20 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'MapsController@index');
+    Route::get('/', [
+        'as' => 'maps', 'uses' => 'MapsController@index'
+    ]);
+
+    Route::get('/tweets', [
+        'as' => 'tweets', 'uses' => 'TweetsController@index'
+    ]);
+    Route::get('/tweets/datatable', [
+        'as' => 'tweets.datatable', 'uses' => 'TweetsController@datatable'
+    ]);
+
+    Route::get('/about', [
+        'as' => 'index', 'uses' => 'AboutController@index'
+    ]);
 });
 
 Route::group(['middleware' => ['api']], function () {
