@@ -32,7 +32,8 @@
                 { data: 'naive_bayes', name: 'naive_bayes' },
                 { data: 'svm', name: 'svm' },
                 { data: 'decision_tree', name: 'decision_tree' }
-            ]
+            ],
+            "order": [[ 0, "desc" ]]
         });
     });
 </script>

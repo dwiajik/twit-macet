@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Tweet;
+use Illuminate\Http\Request;
+use Log;
 use Yajra\Datatables\Datatables;
 
 class TweetsController extends Controller
@@ -18,12 +20,19 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function datatable()
+    public function datatable(Request $request)
     {
-        $tweets = Tweet::where('naive_bayes', 'traffic')
-            ->orWhere('svm', 'traffic')
-            ->orWhere('decision_tree', 'traffic')
-            ->orderBy('date_time', 'desc');
+        $tweets = Tweet::where(function ($query) {
+            $query->where('naive_bayes', 'traffic')
+                ->orWhere('svm', 'traffic')
+                ->orWhere('decision_tree', 'traffic');
+        });
+
+        $search = $request->input('search');
+        if($search['value']) {
+            // filter the query
+            $tweets = $tweets->where('raw_tweet', 'like', '%'.$search['value'].'%');
+        }
 
         return Datatables::of($tweets)->make(true);
     }
