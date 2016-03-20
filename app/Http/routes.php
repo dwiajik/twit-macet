@@ -40,5 +40,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['middleware' => ['api']], function () {
-
+    Route::get('maps/placeInfo', [
+        'as' => 'maps.placeInfo', 'uses' => 'MapsController@getPlaceInfo'
+    ]);
 });
