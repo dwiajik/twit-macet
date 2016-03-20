@@ -42,10 +42,10 @@
                             contentString += '<tr><td>' + value.date_time + '</td><td>' + value.raw_tweet + '</td>';
                         });
 
-                        contentString += '</tbody>';
-
-                        contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
+                        contentString += '</tbody></table>';
                     }
+
+                    contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
 
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString
