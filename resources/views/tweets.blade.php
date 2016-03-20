@@ -13,6 +13,7 @@
                 <th>Naive Bayes</th>
                 <th>SVM</th>
                 <th>Decision Tree</th>
+                <th>Detected Locations</th>
             </tr>
             </thead>
         </table>
@@ -31,7 +32,8 @@
                 { data: 'raw_tweet', name: 'raw_tweet'},
                 { data: 'naive_bayes', name: 'naive_bayes' },
                 { data: 'svm', name: 'svm' },
-                { data: 'decision_tree', name: 'decision_tree' }
+                { data: 'decision_tree', name: 'decision_tree' },
+                { data: 'detected_locations', name: 'detected_locations' }
             ],
             "order": [[ 0, "desc" ]]
         });
