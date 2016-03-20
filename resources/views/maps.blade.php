@@ -43,15 +43,14 @@
                         });
 
                         contentString += '</tbody>';
-                    }
 
-                    contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
+                        contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
+                    }
 
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString
                     });
 
-                    console.log(data);
                     infowindow.open(map, marker);
                 });
             });
