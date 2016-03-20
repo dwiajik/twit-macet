@@ -43,7 +43,8 @@ class MapsController extends Controller
                         ->orWhere('raw_tweet', 'like', "%$place%");
                 })
             ->orderBy('date_time', 'desc')
-            ->get(5);
+            ->take(5)
+            ->get();
 
         return response()->json($response);
     }

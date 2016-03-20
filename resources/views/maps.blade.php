@@ -45,6 +45,8 @@
                         contentString += '</tbody>';
                     }
 
+                    contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
+
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString
                     });

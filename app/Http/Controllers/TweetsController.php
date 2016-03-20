@@ -10,9 +10,9 @@ use Yajra\Datatables\Datatables;
 
 class TweetsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('tweets');
+        return view('tweets')->with('query', $request->input('query'));
     }
 
     /**

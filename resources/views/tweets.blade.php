@@ -23,7 +23,7 @@
 @push('scripts')
 <script>
     $(function() {
-        $('#tweets').DataTable({
+        var datatable = $('#tweets').DataTable({
             processing: true,
             serverSide: true,
             ajax: '{!! route('tweets.datatable') !!}',
@@ -37,6 +37,8 @@
             ],
             "order": [[ 0, "desc" ]]
         });
+
+        datatable.search('{{ $query }}').draw();
     });
 </script>
 @endpush
