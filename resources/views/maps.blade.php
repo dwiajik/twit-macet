@@ -19,21 +19,32 @@
         });
 
         $.each(places, function(index, value) {
-            var marker = new google.maps.Marker({
+            var self = this;
+            self.marker = new google.maps.Marker({
                 position: new google.maps.LatLng(value.latitude, value.longitude),
                 map: map,
                 title: value.name
             });
 
-            marker.addListener('click', function() {
+            $.ajax({
+                url: "{{ url('maps/placeInfo?query=') }}" + value.query
+            }).done(function(data) {
+                if (data.count > 0) {
+                    self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                } else {
+                    self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+                }
+            });
+
+            self.marker.addListener('click', function() {
                 $.ajax({
                     url: "{{ url('maps/placeInfo?query=') }}" + value.query
                 }).done(function(data) {
                     var contentString =
                             '<h5>' + value.name + '</h5>' +
-                            '<div>There are ' + data.count + ' tweets about ' + value.name + '.</div>';
+                            '<div>There are <strong>' + data.count + ' tweets posted today</strong> about <strong>' + value.name + '.</strong></div><br>';
 
-                    if (data.count > 0) {
+                    if (data.recent_tweets.length > 0) {
                         contentString += '<div>Most recent tweets:</div>' +
                                 '<table class="table table-hover">' +
                                 '<thead><tr><th>Date Time</th><th>Tweet</th></tr></thead><tbody>';
@@ -45,13 +56,19 @@
                         contentString += '</tbody></table>';
                     }
 
+                    if (data.count > 0) {
+                        self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                    } else {
+                        self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+                    }
+
                     contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
 
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString
                     });
 
-                    infowindow.open(map, marker);
+                    infowindow.open(map, self.marker);
                 });
             });
         });
