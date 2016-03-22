@@ -23,7 +23,8 @@
             self.marker = new google.maps.Marker({
                 position: new google.maps.LatLng(value.latitude, value.longitude),
                 map: map,
-                title: value.name
+                title: value.name,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'
             });
 
             $.ajax({
@@ -47,10 +48,18 @@
                     if (data.recent_tweets.length > 0) {
                         contentString += '<div>Most recent tweets:</div>' +
                                 '<table class="table table-hover">' +
-                                '<thead><tr><th>Date Time</th><th>Tweet</th></tr></thead><tbody>';
+                                '<thead><tr><th>Date Time</th><th>User</th><th>Tweet</th></tr></thead><tbody>';
 
                         $.each(data.recent_tweets, function (index, value) {
-                            contentString += '<tr><td>' + value.date_time + '</td><td>' + value.raw_tweet + '</td>';
+                            contentString += '<tr><td>' + value.date_time + '</td><td>';
+                            $.ajax({
+                                method: "POST",
+                                url: "{{ url('https://tweeterid.com/ajax.php') }}",
+                                data: { input: value.user_id }
+                            }).done(function(data) {
+                                contentString += data;
+                            });
+                            contentString += '</td><td>' + value.raw_tweet + '</td>';
                         });
 
                         contentString += '</tbody></table>';

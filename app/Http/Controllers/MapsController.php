@@ -32,7 +32,7 @@ class MapsController extends Controller
             ->whereRaw('date_time < CURRENT_DATE + INTERVAL 1 DAY')
             ->count();
 
-        $response['recent_tweets'] = Tweet::select(['date_time', 'raw_tweet'])
+        $response['recent_tweets'] = Tweet::select(['date_time', 'user_id', 'raw_tweet'])
             ->where(
                 function ($query) {
                     $query->where('naive_bayes', 'traffic')
