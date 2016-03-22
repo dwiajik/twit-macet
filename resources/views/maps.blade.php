@@ -48,18 +48,10 @@
                     if (data.recent_tweets.length > 0) {
                         contentString += '<div>Most recent tweets:</div>' +
                                 '<table class="table table-hover">' +
-                                '<thead><tr><th>Date Time</th><th>User</th><th>Tweet</th></tr></thead><tbody>';
+                                '<thead><tr><th>Date Time</th><th>Tweet</th></tr></thead><tbody>';
 
                         $.each(data.recent_tweets, function (index, value) {
-                            contentString += '<tr><td>' + value.date_time + '</td><td>';
-                            $.ajax({
-                                method: "POST",
-                                url: "{{ url('https://tweeterid.com/ajax.php') }}",
-                                data: { input: value.user_id }
-                            }).done(function(data) {
-                                contentString += data;
-                            });
-                            contentString += '</td><td>' + value.raw_tweet + '</td>';
+                            contentString += '<tr><td>' + value.date_time + '</td><td>' + value.raw_tweet + '</td>';
                         });
 
                         contentString += '</tbody></table>';
