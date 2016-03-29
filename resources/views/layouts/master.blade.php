@@ -24,6 +24,7 @@
                     <ul class="nav navbar-nav">
                         <li class="{{ (Request::is('/') ? 'active' : '') }}"><a href="{{ url('/') }}">Maps</a></li>
                         <li class="{{ (Request::is('tweets') ? 'active' : '') }}"><a href="{{ url('/tweets') }}">Tweets</a></li>
+                        <li class="{{ (Request::is('analytics') ? 'active' : '') }}"><a href="{{ url('/analytics') }}">Analytics</a></li>
                         <li class="{{ (Request::is('about') ? 'active' : '') }}"><a href="{{ url('/about') }}">About</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

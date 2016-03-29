@@ -34,6 +34,10 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'tweets.datatable', 'uses' => 'TweetsController@datatable'
     ]);
 
+    Route::get('/analytics', [
+        'as' => 'analytics', 'uses' => 'AnalyticsController@index'
+    ]);
+
     Route::get('/about', [
         'as' => 'index', 'uses' => 'AboutController@index'
     ]);
