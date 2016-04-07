@@ -37,6 +37,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/analytics', [
         'as' => 'analytics', 'uses' => 'AnalyticsController@index'
     ]);
+    Route::get('/analytics/api/v1/timeColumnChart', [
+        'as' => 'analytics', 'uses' => 'AnalyticsController@timeColumnChartAPI'
+    ]);
+    Route::get('/analytics/api/v1/dayColumnChart', [
+        'as' => 'analytics', 'uses' => 'AnalyticsController@dayColumnChartAPI'
+    ]);
+    Route::get('/analytics/api/v1/lineChart', [
+        'as' => 'analytics', 'uses' => 'AnalyticsController@lineChartAPI'
+    ]);
 
     Route::get('/about', [
         'as' => 'index', 'uses' => 'AboutController@index'

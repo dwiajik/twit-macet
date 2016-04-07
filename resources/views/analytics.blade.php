@@ -5,189 +5,164 @@
 @section('content')
 <div class="container">
     <h2>Analytics</h2>
-    <br>
-    <h4>Tweets per Day</h4>
-    <div>
-        <input type="checkbox" id="checkbox-nb" checked> Naive Bayes
-    </div>
-    <div>
-        <input type="checkbox" id="checkbox-svm" checked> Support Vector Machine
-    </div>
-    <div>
-        <input type="checkbox" id="checkbox-dt" checked> Decision Tree
-    </div>
-    <table class="table table-bordered" id="tweets">
-        <thead>
-        <tr>
-            <th rowspan="2" class="text-center">Time</th>
-            <th colspan="14" class="text-center">Day</th>
-        </tr>
-        <tr>
-            <th colspan="2" class="text-center">Sunday</th>
-            <th colspan="2" class="text-center">Monday</th>
-            <th colspan="2" class="text-center">Tuesday</th>
-            <th colspan="2" class="text-center">Wednesday</th>
-            <th colspan="2" class="text-center">Thursday</th>
-            <th colspan="2" class="text-center">Friday</th>
-            <th colspan="2" class="text-center">Saturday</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div id="time-column-chart" class="chart"></div>
 
-        <tr>
-            <th rowspan="3" class="text-center row-time">00.00 - 05.59</th>
-            @foreach($tweetCount["00"]['naive_bayes'] as $row)
-                <td class="row-nb">
-                    <strong>NB</strong>
-                </td>
-                <td class="row-nb">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["00"]['svm'] as $row)
-                <td class="row-svm">
-                    <strong>SVM</strong>
-                </td>
-                <td class="row-svm">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["00"]['decision_tree'] as $row)
-                <td class="row-dt">
-                    <strong>DT</strong>
-                </td>
-                <td class="row-dt">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
+    <div id="day-column-chart" class="chart"></div>
 
-        <tr>
-            <th rowspan="3" class="text-center row-time">06.00 - 11.59</th>
-            @foreach($tweetCount["06"]['naive_bayes'] as $row)
-                <td class="row-nb">
-                    <strong>NB</strong>
-                </td>
-                <td class="row-nb">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["06"]['svm'] as $row)
-                <td class="row-svm">
-                    <strong>SVM</strong>
-                </td>
-                <td class="row-svm">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["06"]['decision_tree'] as $row)
-                <td class="row-dt">
-                    <strong>DT</strong>
-                </td>
-                <td class="row-dt">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-
-        <tr>
-            <th rowspan="3" class="text-center row-time">12.00 - 17.59</th>
-            @foreach($tweetCount["12"]['naive_bayes'] as $row)
-                <td class="row-nb">
-                    <strong>NB</strong>
-                </td>
-                <td class="row-nb">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["12"]['svm'] as $row)
-                <td class="row-svm">
-                    <strong>SVM</strong>
-                </td>
-                <td class="row-svm">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["12"]['decision_tree'] as $row)
-                <td class="row-dt">
-                    <strong>DT</strong>
-                </td>
-                <td class="row-dt">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-
-        <tr>
-            <th rowspan="3" class="text-center row-time">18.00 - 23.59</th>
-            @foreach($tweetCount["18"]['naive_bayes'] as $row)
-                <td class="row-nb">
-                    <strong>NB</strong>
-                </td>
-                <td class="row-nb">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["18"]['svm'] as $row)
-                <td class="row-svm">
-                    <strong>SVM</strong>
-                </td>
-                <td class="row-svm">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        <tr>
-            @foreach($tweetCount["18"]['decision_tree'] as $row)
-                <td class="row-dt">
-                    <strong>DT</strong>
-                </td>
-                <td class="row-dt">
-                    {{ $row }} tweets
-                </td>
-            @endforeach
-        </tr>
-        </tbody>
-    </table>
+    <div id="line-chart" class="chart"></div>
 </div>
 @endsection
 
 @push('scripts')
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 <script>
-    $('#checkbox-nb').change(function() {
-        if(this.checked) {
-            $('.row-nb').show();
-        } else {
-            $('.row-nb').hide();
-        }
+    $.ajax({
+        url: "{{ url('analytics/api/v1/timeColumnChart') }}"
+    }).done(function(data) {
+        console.log(data);
+        $(function () {
+            $('#time-column-chart').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Tweets Count by Hour'
+                },
+                xAxis: {
+                    categories: [
+                        '00.00 - 05.59',
+                        '06.00 - 11.59',
+                        '12.00 - 17.59',
+                        '18.00 - 23.59'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'tweets / day'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} tweets/day</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                series: [{
+                    name: 'Naive Bayes',
+                    data: data.naive_bayes
+
+                }, {
+                    name: 'Support Vector Machine',
+                    data: data.svm
+
+                }, {
+                    name: 'Decision Tree',
+                    data: data.decision_tree
+                }]
+            });
+        });
     });
-    $('#checkbox-svm').change(function() {
-        if(this.checked) {
-            $('.row-svm').show();
-        } else {
-            $('.row-svm').hide();
-        }
+</script>
+
+<script>
+    $.ajax({
+        url: "{{ url('analytics/api/v1/dayColumnChart') }}"
+    }).done(function(data) {
+        $(function () {
+            $('#day-column-chart').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Tweets Count by Day'
+                },
+                xAxis: {
+                    categories: [
+                        'Sunday',
+                        'Monday',
+                        'Tuesday',
+                        'Wednesday',
+                        'Thursday',
+                        'Friday',
+                        'Saturday'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'tweets / day'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} tweets/day</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                series: [{
+                    name: 'Naive Bayes',
+                    data: data.naive_bayes
+
+                }, {
+                    name: 'Support Vector Machine',
+                    data: data.svm
+
+                }, {
+                    name: 'Decision Tree',
+                    data: data.decision_tree
+                }]
+            });
+        });
     });
-    $('#checkbox-dt').change(function() {
-        if(this.checked) {
-            $('.row-dt').show();
-        } else {
-            $('.row-dt').hide();
-        }
+</script>
+
+<script>
+    $.ajax({
+        url: "{{ url('analytics/api/v1/lineChart') }}"
+    }).done(function(data) {
+        $(function () {
+            $('#line-chart').highcharts({
+                title: {
+                    text: 'Tweets Trend'
+                },
+                xAxis: {
+                    categories: ['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', '1 days ago', 'today']
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'tweets / day'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ' tweets/day'
+                },
+                series: [{
+                    name: 'Naive Bayes',
+                    data: data.naive_bayes
+                }, {
+                    name: 'Support Vector Machine',
+                    data: data.naive_bayes
+                }, {
+                    name: 'Decision Tree',
+                    data: data.naive_bayes
+                }]
+            });
+        });
     });
 </script>
 @endpush
