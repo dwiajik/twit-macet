@@ -135,8 +135,8 @@ class AnalyticsController extends Controller
             $response[$classifier] = [];
 
             for($i = 7; $i > 0; $i--) {
-                $date_limit_after = date("Y-m-d", strtotime("-" . $i . " day")) . " 00:00:00";
-                $date_limit_before = date("Y-m-d", strtotime("-" . $i - 1 . " day")) . " 00:00:00";
+                $date_limit_after = date("Y-m-d", strtotime("-" . $i - 1 . " day")) . " 00:00:00";
+                $date_limit_before = date("Y-m-d", strtotime("-" . $i . " day")) . " 00:00:00";
 
                 $response[$classifier][] = Tweet::where($classifier, 'traffic')
                     ->where('date_time', '>=', $date_limit_after)
@@ -202,8 +202,6 @@ class AnalyticsController extends Controller
                     $summary->tweets_count = $summary->tweets_count + $tweets_count;
                     $summary->days_count = $summary->days_count + $days_count;
                     $summary->save();
-
-                    Log::info($summary);
                 }
             }
         }
