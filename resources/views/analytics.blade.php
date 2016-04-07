@@ -36,7 +36,7 @@
 
         <tr>
             <th rowspan="3" class="text-center row-time">00.00 - 05.59</th>
-            @foreach($tweetCount[0]['naive_bayes'] as $row)
+            @foreach($tweetCount["00"]['naive_bayes'] as $row)
                 <td class="row-nb">
                     <strong>NB</strong>
                 </td>
@@ -46,7 +46,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[0]['svm'] as $row)
+            @foreach($tweetCount["00"]['svm'] as $row)
                 <td class="row-svm">
                     <strong>SVM</strong>
                 </td>
@@ -56,7 +56,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[0]['decision_tree'] as $row)
+            @foreach($tweetCount["00"]['decision_tree'] as $row)
                 <td class="row-dt">
                     <strong>DT</strong>
                 </td>
@@ -68,7 +68,7 @@
 
         <tr>
             <th rowspan="3" class="text-center row-time">06.00 - 11.59</th>
-            @foreach($tweetCount[6]['naive_bayes'] as $row)
+            @foreach($tweetCount["06"]['naive_bayes'] as $row)
                 <td class="row-nb">
                     <strong>NB</strong>
                 </td>
@@ -78,7 +78,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[6]['svm'] as $row)
+            @foreach($tweetCount["06"]['svm'] as $row)
                 <td class="row-svm">
                     <strong>SVM</strong>
                 </td>
@@ -88,7 +88,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[6]['decision_tree'] as $row)
+            @foreach($tweetCount["06"]['decision_tree'] as $row)
                 <td class="row-dt">
                     <strong>DT</strong>
                 </td>
@@ -100,7 +100,7 @@
 
         <tr>
             <th rowspan="3" class="text-center row-time">12.00 - 17.59</th>
-            @foreach($tweetCount[12]['naive_bayes'] as $row)
+            @foreach($tweetCount["12"]['naive_bayes'] as $row)
                 <td class="row-nb">
                     <strong>NB</strong>
                 </td>
@@ -110,7 +110,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[12]['svm'] as $row)
+            @foreach($tweetCount["12"]['svm'] as $row)
                 <td class="row-svm">
                     <strong>SVM</strong>
                 </td>
@@ -120,7 +120,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[12]['decision_tree'] as $row)
+            @foreach($tweetCount["12"]['decision_tree'] as $row)
                 <td class="row-dt">
                     <strong>DT</strong>
                 </td>
@@ -132,7 +132,7 @@
 
         <tr>
             <th rowspan="3" class="text-center row-time">18.00 - 23.59</th>
-            @foreach($tweetCount[18]['naive_bayes'] as $row)
+            @foreach($tweetCount["18"]['naive_bayes'] as $row)
                 <td class="row-nb">
                     <strong>NB</strong>
                 </td>
@@ -142,7 +142,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[18]['svm'] as $row)
+            @foreach($tweetCount["18"]['svm'] as $row)
                 <td class="row-svm">
                     <strong>SVM</strong>
                 </td>
@@ -152,7 +152,7 @@
             @endforeach
         </tr>
         <tr>
-            @foreach($tweetCount[18]['decision_tree'] as $row)
+            @foreach($tweetCount["18"]['decision_tree'] as $row)
                 <td class="row-dt">
                     <strong>DT</strong>
                 </td>
