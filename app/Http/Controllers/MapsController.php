@@ -28,8 +28,7 @@ class MapsController extends Controller
                     $query->where('raw_tweet', 'like', "%$place%")
                         ->orWhere('raw_tweet', 'like', "%$place%");
                 })
-            ->whereRaw('date_time >= CURRENT_DATE')
-            ->whereRaw('date_time < CURRENT_DATE + INTERVAL 1 DAY')
+            ->where('date_time', '>=', date("Y-m-d H:i:s", strtotime("today")))
             ->count();
 
         $response['recent_tweets'] = Tweet::select(['date_time', 'raw_tweet'])

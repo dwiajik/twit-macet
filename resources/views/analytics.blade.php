@@ -132,7 +132,7 @@
         $(function () {
             $('#line-chart').highcharts({
                 title: {
-                    text: 'Tweets Trend'
+                    text: 'Tweets Trend (last 7 days)'
                 },
                 xAxis: {
                     categories: ['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', '1 days ago', 'today']
