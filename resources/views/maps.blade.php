@@ -4,6 +4,11 @@
 
 @section('content')
 <div id="map"></div>
+<div id="legend" class="legend">
+    <strong>Legend</strong><br><br>
+    <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" height="24px"> There are tweets posted today<br><br>
+    <img src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png" height="24px"> No tweet posted today
+</div>
 @endsection
 
 @push('scripts')
@@ -73,6 +78,9 @@
                 });
             });
         });
+
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(
+                document.getElementById('legend'));
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqCYmeo01ZTavbm3vLcsGwtVTjYYF_Njg&callback=initMap" async defer></script>

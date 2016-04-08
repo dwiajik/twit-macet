@@ -27,6 +27,10 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'maps', 'uses' => 'MapsController@index'
     ]);
 
+    Route::get('/auth/login', [
+        'as' => 'auth.login', 'uses' => 'Auth\AuthController@getLogin'
+    ]);
+
     Route::get('/tweets', [
         'as' => 'tweets', 'uses' => 'TweetsController@index'
     ]);
@@ -50,6 +54,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/about', [
         'as' => 'index', 'uses' => 'AboutController@index'
     ]);
+
+    Route::auth();
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/home', 'HomeController@index');
+
+        Route::get('/auth/logout', [
+            'as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout'
+        ]);
+    });
 });
 
 Route::group(['middleware' => ['api']], function () {

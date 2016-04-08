@@ -10,3 +10,12 @@
 .chart {
     margin-top: 50px;
 }
+
+.legend {
+    padding: 20px;
+    background: white;
+}
+
+.content {
+    padding-top: 30px;
+}
