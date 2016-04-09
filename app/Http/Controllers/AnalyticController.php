@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class AnalyticsController extends Controller
+class AnalyticController extends Controller
 {
     public function index()
     {
         $this->recalculateSummary();
 
-        return view('analytics');
+        return view('analytic');
     }
 
     private function getTweetsCount()

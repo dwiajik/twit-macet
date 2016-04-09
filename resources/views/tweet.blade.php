@@ -26,7 +26,7 @@
         var datatable = $('#tweets').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('tweets.datatable') !!}',
+            ajax: '{!! route('tweet.datatable') !!}',
             columns: [
                 { data: 'date_time', name: 'date_time' },
                 { data: 'raw_tweet', name: 'raw_tweet'},

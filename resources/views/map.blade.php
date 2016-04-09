@@ -45,7 +45,7 @@
             });
 
             $.ajax({
-                url: "{{ url('maps/placeInfo?query=') }}" + value.query
+                url: "{{ url('map/placeInfo?query=') }}" + value.query
             }).done(function(data) {
                 if (data.count > 0) {
                     self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
@@ -56,7 +56,7 @@
 
             self.marker.addListener('click', function() {
                 $.ajax({
-                    url: "{{ url('maps/placeInfo?query=') }}" + value.query
+                    url: "{{ url('map/placeInfo?query=') }}" + value.query
                 }).done(function(data) {
                     var contentString =
                             '<h5>' + value.name + '</h5>' +
@@ -80,7 +80,7 @@
                         self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
                     }
 
-                    contentString += '<a href="{{ url('tweets?query=') }}' + value.query + '">See all tweets</a>';
+                    contentString += '<a href="{{ url('tweet?query=') }}' + value.query + '">See all tweets</a>';
 
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString

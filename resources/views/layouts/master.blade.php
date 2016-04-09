@@ -23,8 +23,8 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="{{ (Request::is('/') ? 'active' : '') }}"><a href="{{ url('/') }}">Maps</a></li>
-                        <li class="{{ (Request::is('tweets') ? 'active' : '') }}"><a href="{{ url('/tweets') }}">Tweets</a></li>
-                        <li class="{{ (Request::is('analytics') ? 'active' : '') }}"><a href="{{ url('/analytics') }}">Analytics</a></li>
+                        <li class="{{ (Request::is('tweet') ? 'active' : '') }}"><a href="{{ url('/tweet') }}">Tweets</a></li>
+                        <li class="{{ (Request::is('analytic') ? 'active' : '') }}"><a href="{{ url('/analytic') }}">Analytics</a></li>
                         <li class="{{ (Request::is('about') ? 'active' : '') }}"><a href="{{ url('/about') }}">About</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -32,7 +32,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ url('/locations') }}">Locations</a></li>
+                                    <li><a href="{{ url('/location') }}">Locations</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                                 </ul>

@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use Log;
 use Yajra\Datatables\Datatables;
 
-class TweetsController extends Controller
+class TweetController extends Controller
 {
     public function index(Request $request)
     {
-        return view('tweets')->with('query', $request->input('query'));
+        return view('tweet')->with('query', $request->input('query'));
     }
 
     /**

@@ -24,31 +24,31 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', [
-        'as' => 'maps', 'uses' => 'MapsController@index'
+        'as' => 'map', 'uses' => 'MapController@index'
     ]);
 
     Route::get('/auth/login', [
         'as' => 'auth.login', 'uses' => 'Auth\AuthController@getLogin'
     ]);
 
-    Route::get('/tweets', [
-        'as' => 'tweets', 'uses' => 'TweetsController@index'
+    Route::get('/tweet', [
+        'as' => 'tweet', 'uses' => 'TweetController@index'
     ]);
-    Route::get('/tweets/datatable', [
-        'as' => 'tweets.datatable', 'uses' => 'TweetsController@datatable'
+    Route::get('/tweet/datatable', [
+        'as' => 'tweet.datatable', 'uses' => 'TweetController@datatable'
     ]);
 
-    Route::get('/analytics', [
-        'as' => 'analytics', 'uses' => 'AnalyticsController@index'
+    Route::get('/analytic', [
+        'as' => 'analytic', 'uses' => 'AnalyticController@index'
     ]);
-    Route::get('/analytics/api/v1/timeColumnChart', [
-        'as' => 'analytics', 'uses' => 'AnalyticsController@timeColumnChartAPI'
+    Route::get('/analytic/api/v1/timeColumnChart', [
+        'as' => 'analytic', 'uses' => 'AnalyticController@timeColumnChartAPI'
     ]);
-    Route::get('/analytics/api/v1/dayColumnChart', [
-        'as' => 'analytics', 'uses' => 'AnalyticsController@dayColumnChartAPI'
+    Route::get('/analytic/api/v1/dayColumnChart', [
+        'as' => 'analytic', 'uses' => 'AnalyticController@dayColumnChartAPI'
     ]);
-    Route::get('/analytics/api/v1/lineChart', [
-        'as' => 'analytics', 'uses' => 'AnalyticsController@lineChartAPI'
+    Route::get('/analytic/api/v1/lineChart', [
+        'as' => 'analytic', 'uses' => 'AnalyticController@lineChartAPI'
     ]);
 
     Route::get('/about', [
@@ -60,12 +60,26 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index');
 
-        Route::get('/locations', [
-            'as' => 'locations', 'uses' => 'LocationsController@index'
-        ]);
-        Route::get('/locations/datatable', [
-            'as' => 'locations.datatable', 'uses' => 'LocationsController@datatable'
-        ]);
+        Route::group(['prefix' => 'location'], function() {
+            Route::get('/', [
+                'as' => 'location', 'uses' => 'LocationController@index'
+            ]);
+            Route::get('/datatable', [
+                'as' => 'location.datatable', 'uses' => 'LocationController@datatable'
+            ]);
+            Route::get('/create', [
+                'as' => 'location.create', 'uses' => 'LocationController@create'
+            ]);
+            Route::get('/{location}/edit', [
+                'as' => 'location.edit', 'uses' => 'LocationController@edit'
+            ]);
+            Route::post('/', [
+                'as' => 'location.store', 'uses' => 'LocationController@store'
+            ]);
+            Route::get('/{location}/delete', [
+                'as' => 'location.destroy', 'uses' => 'LocationController@destroy'
+            ]);
+        });
 
         Route::get('/auth/logout', [
             'as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout'
@@ -74,7 +88,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['middleware' => ['api']], function () {
-    Route::get('maps/placeInfo', [
-        'as' => 'maps.placeInfo', 'uses' => 'MapsController@getPlaceInfo'
+    Route::get('map/placeInfo', [
+        'as' => 'map.placeInfo', 'uses' => 'MapController@getPlaceInfo'
     ]);
 });

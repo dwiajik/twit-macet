@@ -19,7 +19,7 @@
 
 <script>
     $.ajax({
-        url: "{{ url('analytics/api/v1/timeColumnChart') }}"
+        url: "{{ url('analytic/api/v1/timeColumnChart') }}"
     }).done(function(data) {
         console.log(data);
         $(function () {
@@ -72,7 +72,7 @@
 
 <script>
     $.ajax({
-        url: "{{ url('analytics/api/v1/dayColumnChart') }}"
+        url: "{{ url('analytic/api/v1/dayColumnChart') }}"
     }).done(function(data) {
         $(function () {
             $('#day-column-chart').highcharts({
@@ -127,7 +127,7 @@
 
 <script>
     $.ajax({
-        url: "{{ url('analytics/api/v1/lineChart') }}"
+        url: "{{ url('analytic/api/v1/lineChart') }}"
     }).done(function(data) {
         console.log(data);
         $(function () {

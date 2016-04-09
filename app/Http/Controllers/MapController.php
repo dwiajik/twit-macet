@@ -7,13 +7,13 @@ use App\Location;
 use App\Tweet;
 use Illuminate\Http\Request;
 
-class MapsController extends Controller
+class MapController extends Controller
 {
     public function index()
     {
         $locations = Location::all();
 
-        return view('maps')->with('locations', $locations);
+        return view('map')->with('locations', $locations);
     }
 
     public function getPlaceInfo(Request $request)
@@ -51,10 +51,5 @@ class MapsController extends Controller
             ->get();
 
         return response()->json($response);
-    }
-
-    public function getTweetsCount()
-    {
-
     }
 }
