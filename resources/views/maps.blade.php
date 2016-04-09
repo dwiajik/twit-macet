@@ -12,7 +12,19 @@
 @endsection
 
 @push('scripts')
-<script src="{{ url('assets/js/places.js') }}"></script>
+{{--<script src="{{ url('assets/js/places.js') }}"></script>--}}
+<script>
+    var places = [
+        @foreach($locations as $location)
+            {
+                name: '{{ $location->name }}',
+                latitude: {{ $location->latitude }},
+                longitude: {{ $location->longitude }},
+                query: '{{ $location->query }}'
+            },
+        @endforeach
+        ];
+</script>
 <script>
     function initMap() {
         var yogyakarta = new google.maps.LatLng(-7.79, 110.375);

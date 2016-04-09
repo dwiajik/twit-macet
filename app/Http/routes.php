@@ -60,6 +60,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index');
 
+        Route::get('/locations', [
+            'as' => 'locations', 'uses' => 'LocationsController@index'
+        ]);
+        Route::get('/locations/datatable', [
+            'as' => 'locations.datatable', 'uses' => 'LocationsController@datatable'
+        ]);
+
         Route::get('/auth/logout', [
             'as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout'
         ]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Location;
 use App\Tweet;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,9 @@ class MapsController extends Controller
 {
     public function index()
     {
-        return view('maps');
+        $locations = Location::all();
+
+        return view('maps')->with('locations', $locations);
     }
 
     public function getPlaceInfo(Request $request)

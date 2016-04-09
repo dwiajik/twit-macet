@@ -17,6 +17,7 @@ class AnalyticsController extends Controller
     public function index()
     {
         $this->recalculateSummary();
+
         return view('analytics');
     }
 

@@ -129,6 +129,7 @@
     $.ajax({
         url: "{{ url('analytics/api/v1/lineChart') }}"
     }).done(function(data) {
+        console.log(data);
         $(function () {
             $('#line-chart').highcharts({
                 title: {
@@ -156,10 +157,10 @@
                     data: data.naive_bayes
                 }, {
                     name: 'Support Vector Machine',
-                    data: data.naive_bayes
+                    data: data.svm
                 }, {
                     name: 'Decision Tree',
-                    data: data.naive_bayes
+                    data: data.decision_tree
                 }]
             });
         });
