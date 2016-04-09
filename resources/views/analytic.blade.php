@@ -9,7 +9,11 @@
 
     <div id="day-column-chart" class="chart"></div>
 
-    <div id="line-chart" class="chart"></div>
+    <div id="daily-line-chart" class="chart"></div>
+
+    <div id="weekly-line-chart" class="chart"></div>
+
+    <div id="monthly-line-chart" class="chart"></div>
 </div>
 @endsection
 
@@ -90,7 +94,8 @@
                         'Wednesday',
                         'Thursday',
                         'Friday',
-                        'Saturday'
+                        'Saturday',
+                        "<strong>Average</strong>"
                     ],
                     crosshair: true
                 },
@@ -127,21 +132,21 @@
 
 <script>
     $.ajax({
-        url: "{{ url('analytic/api/v1/lineChart') }}"
+        url: "{{ url('analytic/api/v1/dailyLineChart') }}"
     }).done(function(data) {
         console.log(data);
         $(function () {
-            $('#line-chart').highcharts({
+            $('#daily-line-chart').highcharts({
                 title: {
-                    text: 'Tweets Trend (last 7 days)'
+                    text: 'Daily Tweets Trend'
                 },
                 xAxis: {
-                    categories: ['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', '1 days ago', 'today']
+                    categories: ['7 days ago', '6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', '1 day ago', 'today']
                 },
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'tweets / day'
+                        text: 'tweets'
                     },
                     plotLines: [{
                         value: 0,
@@ -150,7 +155,91 @@
                     }]
                 },
                 tooltip: {
-                    valueSuffix: ' tweets/day'
+                    valueSuffix: ' tweets'
+                },
+                series: [{
+                    name: 'Naive Bayes',
+                    data: data.naive_bayes
+                }, {
+                    name: 'Support Vector Machine',
+                    data: data.svm
+                }, {
+                    name: 'Decision Tree',
+                    data: data.decision_tree
+                }]
+            });
+        });
+    });
+</script>
+
+<script>
+    $.ajax({
+        url: "{{ url('analytic/api/v1/weeklyLineChart') }}"
+    }).done(function(data) {
+        console.log(data);
+        $(function () {
+            $('#weekly-line-chart').highcharts({
+                title: {
+                    text: 'Weekly Tweets Trend'
+                },
+                xAxis: {
+                    categories: ['7 weeks ago', '6 weeks ago', '5 weeks ago', '4 weeks ago', '3 weeks ago', '2 weeks ago', '1 week ago', 'this week']
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'tweets'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ' tweets'
+                },
+                series: [{
+                    name: 'Naive Bayes',
+                    data: data.naive_bayes
+                }, {
+                    name: 'Support Vector Machine',
+                    data: data.svm
+                }, {
+                    name: 'Decision Tree',
+                    data: data.decision_tree
+                }]
+            });
+        });
+    });
+</script>
+
+<script>
+    $.ajax({
+        url: "{{ url('analytic/api/v1/monthlyLineChart') }}"
+    }).done(function(data) {
+        console.log(data);
+        $(function () {
+            $('#monthly-line-chart').highcharts({
+                title: {
+                    text: 'Monthly Tweets Trend'
+                },
+                xAxis: {
+                    categories: ['7 months ago', '6 months ago', '5 months ago', '4 months ago', '3 months ago', '2 months ago', '1 month ago', 'this month']
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'tweets'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ' tweets'
                 },
                 series: [{
                     name: 'Naive Bayes',

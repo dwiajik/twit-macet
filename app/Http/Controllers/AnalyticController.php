@@ -96,6 +96,8 @@ class AnalyticController extends Controller
         foreach (array("naive_bayes",
                      "svm",
                      "decision_tree") as $classifier) {
+            $totalTweetsCount = 0;
+            $totalDaysCount = 0;
             $response[$classifier] = [];
             foreach (array("Sunday",
                          "Monday",
@@ -104,30 +106,34 @@ class AnalyticController extends Controller
                          "Thursday",
                          "Friday",
                          "Saturday") as $day) {
-                $tweets_count = 0;
-                $days_count = 0;
+                $tweetsCount = 0;
+                $daysCount = 0;
                 foreach (array("00", "06", "12", "18") as $hour) {
 
-                    $tweets_count += TweetSummary::where('day', $day)
+                    $tweetsCount += TweetSummary::where('day', $day)
                         ->where('hour', $hour)
                         ->where('classifier', $classifier)
                         ->first()
                         ->tweets_count;
+                    $totalTweetsCount += $tweetsCount;
 
-                    $days_count += TweetSummary::where('day', $day)
+                    $daysCount += TweetSummary::where('day', $day)
                         ->where('hour', $hour)
                         ->where('classifier', $classifier)
                         ->first()
                         ->days_count;
+                    $totalDaysCount += $daysCount;
                 }
-                $response[$classifier][] = $days_count == 0? 0: round($tweets_count/$days_count, 2);
+                $response[$classifier][] = $daysCount == 0? 0: round($tweetsCount/$daysCount, 2);
             }
+
+            $response[$classifier][] = $totalDaysCount == 0? 0: round($totalTweetsCount/$totalDaysCount, 2);
         }
 
         return response()->json($response);
     }
 
-    public function lineChartAPI()
+    public function dailyLineChartAPI()
     {
         foreach (array("naive_bayes",
                      "svm",
@@ -136,7 +142,7 @@ class AnalyticController extends Controller
             $response[$classifier] = [];
 
             for($i = 7; $i > 0; $i--) {
-                $date_limit_after = date("Y-m-d", strtotime("-" . $i - 1 . " day")) . " 00:00:00";
+                $date_limit_after = date("Y-m-d", strtotime("-" . ($i + 1) . " day")) . " 00:00:00";
                 $date_limit_before = date("Y-m-d", strtotime("-" . $i . " day")) . " 00:00:00";
 
                 $response[$classifier][] = Tweet::where($classifier, 'traffic')
@@ -147,6 +153,54 @@ class AnalyticController extends Controller
 
             $response[$classifier][] = Tweet::where($classifier, 'traffic')
                 ->where('date_time', '>=', date("Y-m-d H:i:s", strtotime("today")))
+                ->count();
+        }
+
+        return response()->json($response);
+    }
+
+    public function weeklyLineChartAPI()
+    {
+        foreach (array("naive_bayes",
+                     "svm",
+                     "decision_tree") as $classifier) {
+
+            $response[$classifier] = [];
+
+            for($i = 7; $i >= 0; $i--) {
+                $date_limit_after = date("Y-m-d", strtotime("-" . ($i + 1) . " Sunday")) . " 00:00:00";
+                $date_limit_before = date("Y-m-d", strtotime("-" . $i . " Sunday")) . " 00:00:00";
+
+                $response[$classifier][] = Tweet::where($classifier, 'traffic')
+                    ->where('date_time', '>=', $date_limit_after)
+                    ->where('date_time', '<', $date_limit_before)
+                    ->count();
+            }
+        }
+
+        return response()->json($response);
+    }
+
+    public function monthlyLineChartAPI()
+    {
+        foreach (array("naive_bayes",
+                     "svm",
+                     "decision_tree") as $classifier) {
+
+            $response[$classifier] = [];
+
+            for($i = 6; $i >= 0; $i--) {
+                $date_limit_after = date("Y-m-d", strtotime("first day of -" . ($i + 1) . " month")) . " 00:00:00";
+                $date_limit_before = date("Y-m-d", strtotime("first day of -" . $i . " month")) . " 00:00:00";
+
+                $response[$classifier][] = Tweet::where($classifier, 'traffic')
+                    ->where('date_time', '>=', $date_limit_after)
+                    ->where('date_time', '<', $date_limit_before)
+                    ->count();
+            }
+
+            $response[$classifier][] = Tweet::where($classifier, 'traffic')
+                ->where('date_time', '>=', date("Y-m-d", strtotime("first day of this month")) . " 00:00:00")
                 ->count();
         }
 
