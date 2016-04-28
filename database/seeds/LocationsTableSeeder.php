@@ -271,5 +271,14 @@ class LocationsTableSeeder extends Seeder
             'created_at' => '2016-01-01 00:00:00',
             'updated_at' => '2016-01-01 00:00:00'
         ]);
+
+        DB::table('locations')->insert([
+            'name' => 'Simpang Pakem',
+            'latitude' => -7.667294,
+            'longitude' => 110.418288,
+            'query' => 'pakem',
+            'created_at' => '2016-01-01 00:00:00',
+            'updated_at' => '2016-01-01 00:00:00'
+        ]);
     }
 }
