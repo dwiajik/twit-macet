@@ -96,8 +96,8 @@ class AnalyticController extends Controller
         foreach (array("naive_bayes",
                      "svm",
                      "decision_tree") as $classifier) {
-            $totalTweetsCount = 0;
-            $totalDaysCount = 0;
+            //$totalTweetsCount = 0;
+            //$totalDaysCount = 0;
             $response[$classifier] = [];
             foreach (array("Sunday",
                          "Monday",
@@ -115,7 +115,7 @@ class AnalyticController extends Controller
                         ->where('classifier', $classifier)
                         ->first()
                         ->tweets_count;
-                    $totalTweetsCount += $tweetsCount;
+                    //$totalTweetsCount += $tweetsCount;
 
                     if ($daysCount < TweetSummary::where('day', $day)
                             ->where('hour', $hour)
@@ -130,11 +130,17 @@ class AnalyticController extends Controller
                     }
                 }
                     
-                $totalDaysCount += $daysCount;
+                //$totalDaysCount += $daysCount;
                 $response[$classifier][] = $daysCount == 0? 0: round($tweetsCount/$daysCount, 2);
             }
 
-            $response[$classifier][] = $totalDaysCount == 0? 0: round($totalTweetsCount/$totalDaysCount, 2);
+            $tweets_count = Tweet::where($classifier, 'traffic')->count();
+
+            $days_count_query = 'select date(date_time) from tweets where ' . $classifier . ' = "traffic" group by date(date_time)';
+
+            $days_count = count(DB::select($days_count_query));
+
+            $response[$classifier][] = $days_count == 0? 0: round($tweets_count/$days_count, 2);
         }
 
         return response()->json($response);
