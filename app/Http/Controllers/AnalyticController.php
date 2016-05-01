@@ -128,9 +128,9 @@ class AnalyticController extends Controller
                         ->first()
                         ->days_count;
                     }
-                    
-                    $totalDaysCount += $daysCount;
                 }
+                    
+                $totalDaysCount += $daysCount;
                 $response[$classifier][] = $daysCount == 0? 0: round($tweetsCount/$daysCount, 2);
             }
 
