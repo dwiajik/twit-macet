@@ -241,18 +241,19 @@ class AnalyticController extends Controller
                         ->whereRaw('TIME(date_time) < "' . str_pad($hour + 6, 2, '0', STR_PAD_LEFT) . ':00:00"')
                         ->whereRaw('DAYNAME(date_time) = "' . $day . '"')
                         ->where($classifier, 'traffic')
-                        ->where('date_time', '>', $checkpoint)
-                        ->where('date_time', '<=', $today)
+                        ->where('date_time', '>=', $checkpoint)
+                        ->where('date_time', '<', $today)
                         ->count();
 
-                    $days_count = Tweet::whereRaw('TIME(date_time) >= "' . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00:00"')
+                    $days_count = count(Tweet::whereRaw('TIME(date_time) >= "' . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00:00"')
                         ->whereRaw('TIME(date_time) < "' . str_pad($hour + 6, 2, '0', STR_PAD_LEFT) . ':00:00"')
                         ->whereRaw('DAYNAME(date_time) = "' . $day . '"')
                         ->where($classifier, 'traffic')
-                        ->where('date_time', '>', $checkpoint)
-                        ->where('date_time', '<=', $today)
-                        ->groupBy('date_time')
-                        ->count();
+                        ->where('date_time', '>=', $checkpoint)
+                        ->where('date_time', '<', $today)
+                        ->groupBy('date_time'));
+
+                    //$days_count = count(DB::select('select date(date_time) from tweets where TIME(date_time) >= "06:00:00" and time(date_time) < "12:00:00" and dayname(date_time) = "Saturday" and naive_bayes = "traffic" and date_time >= "2016-04-30 00:00:00" and date_time < "2016-05-01 00:00:00" group by date(date_time)'));
 
                     $summary->tweets_count = $summary->tweets_count + $tweets_count;
                     $summary->days_count = $summary->days_count + $days_count;
