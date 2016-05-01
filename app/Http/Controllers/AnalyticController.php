@@ -117,11 +117,18 @@ class AnalyticController extends Controller
                         ->tweets_count;
                     $totalTweetsCount += $tweetsCount;
 
-                    $daysCount += TweetSummary::where('day', $day)
+                    if ($daysCount < TweetSummary::where('day', $day)
+                            ->where('hour', $hour)
+                            ->where('classifier', $classifier)
+                            ->first()
+                            ->days_count) {
+                        $daysCount = TweetSummary::where('day', $day)
                         ->where('hour', $hour)
                         ->where('classifier', $classifier)
                         ->first()
                         ->days_count;
+                    }
+                    
                     $totalDaysCount += $daysCount;
                 }
                 $response[$classifier][] = $daysCount == 0? 0: round($tweetsCount/$daysCount, 2);
