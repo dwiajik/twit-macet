@@ -133,11 +133,10 @@ class AnalyticController extends Controller
                 //$totalDaysCount += $daysCount;
                 $response[$classifier][] = $daysCount == 0? 0: round($tweetsCount/$daysCount, 2);
             }
-
-            $tweets_count = Tweet::where($classifier, 'traffic')->count();
-
-            $days_count_query = 'select date(date_time) from tweets where ' . $classifier . ' = "traffic" group by date(date_time)';
-
+            
+            $today = date("Y-m-d H:i:s", strtotime("today"));
+            $tweets_count = Tweet::where($classifier, 'traffic')->where('date_time', '<', $today)->count();
+            $days_count_query = 'select date(date_time) from tweets where ' . $classifier . ' = "traffic" and date_time < "' . $today . '" group by date(date_time)';
             $days_count = count(DB::select($days_count_query));
 
             $response[$classifier][] = $days_count == 0? 0: round($tweets_count/$days_count, 2);
@@ -154,7 +153,7 @@ class AnalyticController extends Controller
 
             $response[$classifier] = [];
 
-            for($i = 7; $i > 0; $i--) {
+            for($i = 6; $i >= 0; $i--) {
                 $date_limit_after = date("Y-m-d", strtotime("-" . ($i + 1) . " day")) . " 00:00:00";
                 $date_limit_before = date("Y-m-d", strtotime("-" . $i . " day")) . " 00:00:00";
 
