@@ -41,16 +41,16 @@
                 position: new google.maps.LatLng(value.latitude, value.longitude),
                 map: map,
                 title: value.name,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'
+                icon: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png'
             });
 
             $.ajax({
                 url: "{{ url('map/placeInfo?query=') }}" + value.query
             }).done(function(data) {
                 if (data.count > 0) {
-                    self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                    self.marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
                 } else {
-                    self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+                    self.marker.setIcon('https://maps.google.com/mapfiles/ms/icons/orange-dot.png');
                 }
             });
 
@@ -75,9 +75,9 @@
                     }
 
                     if (data.count > 0) {
-                        self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                        self.marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
                     } else {
-                        self.marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+                        self.marker.setIcon('https://maps.google.com/mapfiles/ms/icons/orange-dot.png');
                     }
 
                     contentString += '<a href="{{ url('tweet?query=') }}' + value.query + '">See all tweets</a>';
