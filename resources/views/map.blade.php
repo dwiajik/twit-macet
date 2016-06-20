@@ -6,8 +6,8 @@
 <div id="map"></div>
 <div id="legend" class="legend">
     <strong>Legend</strong><br><br>
-    <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" height="24px"> There are tweets posted today<br><br>
-    <img src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png" height="24px"> No tweet posted today
+    <img src="https://maps.google.com/mapfiles/ms/icons/red-dot.png" height="24px"> There are tweets posted today<br><br>
+    <img src="https://maps.google.com/mapfiles/ms/icons/orange-dot.png" height="24px"> No tweet posted today
 </div>
 @endsection
 
